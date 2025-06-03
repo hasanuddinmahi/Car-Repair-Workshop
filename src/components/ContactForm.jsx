@@ -6,7 +6,7 @@ function ContactForm() {
   const [whatsappLocal, setWhatsappLocal] = useState('');
   const [message, setMessage] = useState('');
 
-  const whatsappNumber = '1234567890'; // Your business WhatsApp number (with country code, no +)
+  const whatsappNumber = '+971505219792'; // Your business WhatsApp number (with country code, no +)
 
   const handleSubmit = (e) => {
     e.preventDefault();
