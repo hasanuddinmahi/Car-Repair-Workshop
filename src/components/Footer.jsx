@@ -10,7 +10,7 @@ function Footer() {
           rel="noopener noreferrer"
           className="text-white text-decoration-underline"
         >
-          Musaffah M7, Abu Dahbi, UAE
+          Musaffah M7, Plot No- 35, Abu Dhabi, UAE
         </a>
       </p>
       <p>
