@@ -4,7 +4,7 @@ import React from "react";
 import { Button, Box } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { navItems, phoneNumber, whatsappURL } from "./navItems";
+import { navItems, phoneNumber, whatsappURL } from "../js/navItems";
 
 const NavLinks = () => (
   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>

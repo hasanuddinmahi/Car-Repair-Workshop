@@ -11,7 +11,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import MenuIcon from "@mui/icons-material/Menu";
 import { motion } from "framer-motion";
-import { navItems, extraItems } from "./navItems";
+import { navItems, extraItems } from "../js/navItems";
 
 const MobileDrawer = ({ open, toggleDrawer }) => {
   const drawerVariants = {

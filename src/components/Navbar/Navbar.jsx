@@ -5,16 +5,15 @@ import {
   Toolbar,
   Typography,
   Button,
-  IconButton,
-  Drawer,
   useMediaQuery,
   useTheme,
   LinearProgress,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { motion, AnimatePresence } from "framer-motion";
+
+import MobileDrawer from "./MobileDrawer";  // import the new drawer
 
 function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -55,61 +54,6 @@ function Navbar() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
-
-  const toggleDrawer = (open) => () => setDrawerOpen(open);
-
-  const drawerList = (
-    <Box
-      sx={{ width: 250, padding: 2 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <motion.ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-        {[
-          ...navItems,
-          {
-            label: "Call",
-            href: `tel:${phoneNumber}`,
-            icon: <PhoneIcon />,
-          },
-          {
-            label: "WhatsApp",
-            href: whatsappURL,
-            icon: <WhatsAppIcon sx={{ color: "green" }} />,
-            external: true,
-          },
-        ].map((item, i) => (
-          <motion.li
-            key={item.label}
-            initial={{ x: 50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: i * 0.1 }}
-            whileHover={{ scale: 1.05 }}
-            style={{ marginBottom: 16 }}
-          >
-            <Button
-              variant="text"
-              href={item.href}
-              target={item.external ? "_blank" : "_self"}
-              rel={item.external ? "noopener noreferrer" : undefined}
-              fullWidth
-              sx={{
-                justifyContent: "flex-start",
-                color: "white",
-                textTransform: "none",
-                gap: 1,
-                fontSize: "1rem",
-              }}
-              startIcon={item.icon}
-            >
-              {item.label}
-            </Button>
-          </motion.li>
-        ))}
-      </motion.ul>
-    </Box>
-  );
 
   return (
     <>
@@ -165,25 +109,10 @@ function Navbar() {
                 </motion.div>
 
                 {isMobile ? (
-                  <>
-                    <IconButton color="inherit" edge="end" onClick={toggleDrawer(true)}>
-                      <MenuIcon />
-                    </IconButton>
-                    <Drawer
-                      anchor="right"
-                      open={drawerOpen}
-                      onClose={toggleDrawer(false)}
-                      PaperProps={{
-                        sx: {
-                          backgroundColor: "rgba(26, 26, 26, 0.9)",
-                          backdropFilter: "blur(12px)",
-                          color: "white",
-                        },
-                      }}
-                    >
-                      {drawerList}
-                    </Drawer>
-                  </>
+                  <MobileDrawer
+                    open={drawerOpen}
+                    toggleDrawer={(open) => () => setDrawerOpen(open)}
+                  />
                 ) : (
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     {navItems.map(({ label, href }) => (
