@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import { motion, useInView } from "framer-motion";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 function Hero() {
   const [bgLoaded, setBgLoaded] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
     const img = new Image();
@@ -14,21 +14,21 @@ function Hero() {
   }, []);
 
   return (
-    <section
-      ref={ref}
-      className="hero d-flex align-items-center justify-content-center text-center"
-      style={{
-        minHeight: "80vh",
-        color: "white",
-        padding: "2rem",
+    <Box
+      component="section"
+      className="d-flex align-items-center justify-content-center text-center"
+      sx={{
         position: "relative",
         overflow: "hidden",
-        backgroundColor: "#222",
+        bgcolor: "#222",
+        color: "white",
+        py: { xs: 6, md: 8 },
+        minHeight: { xs: "60vh", md: "80vh" },
       }}
     >
-      {/* Background */}
-      <div
-        style={{
+      {/* Dynamic Background */}
+      <Box
+        sx={{
           position: "absolute",
           inset: 0,
           backgroundImage: bgLoaded
@@ -44,26 +44,35 @@ function Hero() {
         aria-hidden="true"
       />
 
-      <motion.div
-        className="container"
-        style={{ position: "relative", zIndex: 2, maxWidth: "800px" }}
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+      {/* Content */}
+      <Container
+        sx={{
+          position: "relative",
+          zIndex: 1,
+          maxWidth: "800px",
+          textAlign: "center",
+        }}
       >
-        <h1 className="display-4" style={{ fontWeight: "700", marginBottom: "0.5rem" }}>
+        <Typography
+          variant="h3"
+          component="h1"
+          fontWeight={700}
+          mb={1}
+          sx={{ fontSize: { xs: "2rem", md: "2.5rem" } }}
+        >
           Expert Car Repair & Auto Service
-        </h1>
-        <p
-          className="lead"
-          style={{
-            fontSize: "1.25rem",
-            marginBottom: "1.5rem",
-            fontWeight: "500",
-          }}
+        </Typography>
+
+        <Typography
+          variant="h6"
+          component="p"
+          fontWeight={500}
+          mb={3}
+          sx={{ fontSize: { xs: "1rem", md: "1.25rem" } }}
         >
           Reliable, Fast, Affordable
-        </p>
+        </Typography>
+
         <Button
           variant="contained"
           size="large"
@@ -85,8 +94,8 @@ function Hero() {
         >
           Book Appointment
         </Button>
-      </motion.div>
-    </section>
+      </Container>
+    </Box>
   );
 }
 

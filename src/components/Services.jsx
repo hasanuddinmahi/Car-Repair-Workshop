@@ -7,41 +7,56 @@ import {
   SettingsInputComposite,
   Settings,
 } from "@mui/icons-material";
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { Container, Typography, Box } from "@mui/material";
+import { motion } from "framer-motion";
 
-function ServiceCard({ Icon, title, desc, color }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const controls = useAnimation();
-
-  useEffect(() => {
-    if (isInView) controls.start("visible");
-  }, [controls, isInView]);
-
-  const variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.15,
+      duration: 0.6,
+      ease: [0.4, 0, 0.2, 1],
     },
-  };
+  }),
+};
 
+function ServiceCard({ Icon, title, desc, color, index }) {
   return (
     <motion.div
-      ref={ref}
-      className="col-md-4"
-      variants={variants}
+      custom={index}
+      variants={cardVariants}
       initial="hidden"
-      animate={controls}
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      className="col-md-4"
       style={{ display: "flex" }}
     >
-      <div className="service-card p-4 border rounded shadow-sm bg-white h-100 text-center" style={{ flexGrow: 1 }}>
-        <Icon sx={{ fontSize: 50, color, mb: 2 }} />
-        <h3 className="h5">{title}</h3>
-        <p>{desc}</p>
-      </div>
+      <Box
+        sx={{
+          flexGrow: 1,
+          bgcolor: "#fff",
+          p: 4,
+          borderRadius: 3,
+          textAlign: "center",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
+          transition: "transform 0.3s, box-shadow 0.3s",
+          "&:hover": {
+            transform: "translateY(-8px)",
+            boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
+          },
+        }}
+      >
+        <Icon sx={{ fontSize: 50, color: color, mb: 2 }} />
+        <Typography variant="h6" fontWeight={600} gutterBottom>
+          {title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {desc}
+        </Typography>
+      </Box>
     </motion.div>
   );
 }
@@ -87,17 +102,26 @@ function Services() {
   ];
 
   return (
-    <section className="services bg-light py-5" id="services">
-      <div className="container">
-        <h2 className="text-center mb-5" style={{ fontWeight: "700" }}>
+    <section id="services" className="py-5 bg-light">
+      <Container>
+        <Typography
+          variant="h4"
+          align="center"
+          fontWeight={700}
+          gutterBottom
+          sx={{
+            mb: 5,
+            fontSize: { xs: "1.8rem", md: "2.2rem" },
+          }}
+        >
           Our Services
-        </h2>
+        </Typography>
         <div className="row g-4">
-          {services.map((service) => (
-            <ServiceCard key={service.title} {...service} />
+          {services.map((service, index) => (
+            <ServiceCard key={service.title} {...service} index={index} />
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -1,118 +1,111 @@
 import React from "react";
+import { Container, Typography, Link, Box, Stack, IconButton } from "@mui/material";
 import { motion } from "framer-motion";
+
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 const socialLinks = [
   {
-    icon: <FacebookIcon />,
-    url: "https://facebook.com/YourPage", // Replace with your actual URL
+    Icon: FacebookIcon,
+    url: "https://facebook.com/YourPage",
     label: "Facebook",
     color: "#1877F2",
   },
   {
-    icon: <InstagramIcon />,
+    Icon: InstagramIcon,
     url: "https://www.instagram.com/nidhamaluddin_workshop",
     label: "Instagram",
     color: "#E4405F",
   },
   {
-    icon: <TwitterIcon />,
+    Icon: TwitterIcon,
     url: "https://twitter.com/YourProfile",
     label: "Twitter",
     color: "#1DA1F2",
   },
   {
-    icon: <WhatsAppIcon />,
+    Icon: WhatsAppIcon,
     url: "https://wa.me/971505219792",
     label: "WhatsApp",
     color: "#25D366",
   },
 ];
 
-function Footer() {
+// Motion-enabled IconButton for hover animations
+const MotionIconButton = motion(IconButton);
+
+export default function Footer() {
   return (
-    <motion.footer
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      style={{
+    <Box
+      component="footer"
+      sx={{
+        bgcolor: "background.paper",
         background: "linear-gradient(135deg, #121212 0%, #1f1f1f 100%)",
         color: "#eee",
-        textAlign: "center",
-        padding: "2rem 1rem",
-        marginTop: "3rem",
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-        fontSize: "0.9rem",
+        py: 4,
+        mt: 5,
         userSelect: "none",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       }}
     >
-      <p style={{ margin: "0.2rem 0" }}>
-        &copy; 2025 Nidham Alauddin Workshop. All rights reserved.
-      </p>
+      <Container maxWidth="md" sx={{ textAlign: "center" }}>
+        <Typography variant="body2" sx={{ mb: 1, userSelect: "text" }}>
+          &copy; 2025 Nidham Alauddin Workshop. All rights reserved.
+        </Typography>
 
-      <p style={{ margin: "0.2rem 0" }}>
-        <strong>Address: </strong>
-        <a
-          href="https://maps.app.goo.gl/qxStuLGHnksiFZaRA?g_st=iw"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            color: "#4caf50",
-            textDecoration: "underline",
-            transition: "color 0.3s ease",
-          }}
-          onMouseEnter={(e) => (e.target.style.color = "#81c784")}
-          onMouseLeave={(e) => (e.target.style.color = "#4caf50")}
-        >
-          Musaffah M7, Plot No- 35, Abu Dhabi, UAE
-        </a>
-      </p>
-
-      <p style={{ margin: "0.2rem 0" }}>
-        <strong>Phone: </strong>
-        <a
-          href="tel:+971505219792"
-          style={{
-            color: "#4caf50",
-            textDecoration: "underline",
-            transition: "color 0.3s ease",
-          }}
-          onMouseEnter={(e) => (e.target.style.color = "#81c784")}
-          onMouseLeave={(e) => (e.target.style.color = "#4caf50")}
-        >
-          +971 50 521 9792
-        </a>
-      </p>
-
-      <div
-        style={{
-          marginTop: 20,
-          display: "flex",
-          justifyContent: "center",
-          gap: 24,
-          fontSize: 28,
-        }}
-      >
-        {socialLinks.map(({ icon, url, label, color }) => (
-          <motion.a
-            key={label}
-            href={url}
+        <Typography variant="body2" sx={{ mb: 1, userSelect: "text" }}>
+          <strong>Address: </strong>
+          <Link
+            href="https://maps.app.goo.gl/qxStuLGHnksiFZaRA?g_st=iw"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={label}
-            whileHover={{ scale: 1.2, color }}
-            style={{ color: "#eee", transition: "color 0.3s ease" }}
+            underline="hover"
+            color="success.main"
+            sx={{
+              transition: "color 0.3s ease",
+              "&:hover": { color: "success.light" },
+            }}
           >
-            {icon}
-          </motion.a>
-        ))}
-      </div>
-    </motion.footer>
+            Musaffah M7, Plot No- 35, Abu Dhabi, UAE
+          </Link>
+        </Typography>
+
+        <Typography variant="body2" sx={{ mb: 3, userSelect: "text" }}>
+          <strong>Phone: </strong>
+          <Link
+            href="tel:+971505219792"
+            underline="hover"
+            color="success.main"
+            sx={{
+              transition: "color 0.3s ease",
+              "&:hover": { color: "success.light" },
+            }}
+          >
+            +971 50 521 9792
+          </Link>
+        </Typography>
+
+        <Stack direction="row" justifyContent="center" spacing={4} sx={{ fontSize: 28 }}>
+          {socialLinks.map(({ Icon, url, label, color }) => (
+            <MotionIconButton
+              key={label}
+              component="a"
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              sx={{ color: "#eee" }}
+              whileHover={{ scale: 1.3, color }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <Icon fontSize="inherit" />
+            </MotionIconButton>
+          ))}
+        </Stack>
+      </Container>
+    </Box>
   );
 }
-
-export default Footer;
