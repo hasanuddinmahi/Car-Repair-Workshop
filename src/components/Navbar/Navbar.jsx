@@ -13,7 +13,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { motion, AnimatePresence } from "framer-motion";
 
-import MobileDrawer from "./MobileDrawer";  // import the new drawer
+import MobileDrawer from "./MobileDrawer";
 
 function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -44,21 +44,22 @@ function Navbar() {
 
       setScrollProgress(scrolled);
 
-      // Show navbar when scrolling up or near top, hide when scrolling down
       setShowNavbar(currentScroll < lastScrollTop || currentScroll < 10);
-
       setLastScrollTop(currentScroll <= 0 ? 0 : currentScroll);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
 
   return (
     <>
       {/* Scroll Progress Bar */}
-      <Box sx={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 1300 }}>
+      <Box
+        component="div"
+        role="presentation"
+        sx={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 1300 }}
+      >
         <LinearProgress
           variant="determinate"
           value={scrollProgress}
@@ -83,6 +84,7 @@ function Navbar() {
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             <AppBar
+              component="nav"
               position="fixed"
               elevation={4}
               sx={{
@@ -97,13 +99,19 @@ function Navbar() {
                   justifyContent: "space-between",
                   px: { xs: 2, md: 3 },
                 }}
+                role="navigation"
+                aria-label="Main Navigation"
               >
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                  <Typography
+                    variant="h1"
+                    sx={{ flexGrow: 1, fontSize: "1.25rem", fontWeight: "bold" }}
+                    component="h1"
+                  >
                     Nidham Alaudddin Workshop
                   </Typography>
                 </motion.div>
@@ -114,7 +122,7 @@ function Navbar() {
                     toggleDrawer={(open) => () => setDrawerOpen(open)}
                   />
                 ) : (
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                  <Box component="nav" sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     {navItems.map(({ label, href }) => (
                       <Button
                         key={label}
@@ -138,6 +146,7 @@ function Navbar() {
                             width: "100%",
                           },
                         }}
+                        aria-label={`Navigate to ${label}`}
                       >
                         {label}
                       </Button>
@@ -148,6 +157,7 @@ function Navbar() {
                       startIcon={<PhoneIcon />}
                       href={`tel:${phoneNumber}`}
                       sx={{ textTransform: "none" }}
+                      aria-label="Call Nidham Workshop"
                     >
                       {phoneNumber}
                     </Button>
@@ -166,6 +176,7 @@ function Navbar() {
                       target="_blank"
                       rel="noopener noreferrer"
                       sx={{ textTransform: "none" }}
+                      aria-label="Chat on WhatsApp"
                     >
                       WhatsApp
                     </Button>
@@ -180,6 +191,8 @@ function Navbar() {
       {/* Sticky Mobile CTA Bar */}
       {isMobile && (
         <Box
+          component="section"
+          aria-label="Mobile Contact Options"
           sx={{
             position: "fixed",
             bottom: 0,
@@ -203,6 +216,7 @@ function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             sx={{ flex: 1, mx: 1 }}
+            aria-label="Contact via WhatsApp"
           >
             WhatsApp
           </Button>
@@ -212,6 +226,7 @@ function Navbar() {
             startIcon={<PhoneIcon />}
             href={`tel:${phoneNumber}`}
             sx={{ flex: 1, mx: 1 }}
+            aria-label="Call now"
           >
             Call
           </Button>

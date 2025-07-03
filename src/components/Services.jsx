@@ -9,6 +9,7 @@ import {
 } from "@mui/icons-material";
 import { Container, Typography, Box } from "@mui/material";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -25,7 +26,7 @@ const cardVariants = {
 
 function ServiceCard({ Icon, title, desc, color, index }) {
   return (
-    <motion.div
+    <motion.article
       custom={index}
       variants={cardVariants}
       initial="hidden"
@@ -33,6 +34,9 @@ function ServiceCard({ Icon, title, desc, color, index }) {
       viewport={{ once: true, amount: 0.3 }}
       className="col-md-4"
       style={{ display: "flex" }}
+      aria-label={title}
+      role="region"
+      tabIndex={0} // make accessible focusable section
     >
       <Box
         sx={{
@@ -49,15 +53,15 @@ function ServiceCard({ Icon, title, desc, color, index }) {
           },
         }}
       >
-        <Icon sx={{ fontSize: 50, color: color, mb: 2 }} />
-        <Typography variant="h6" fontWeight={600} gutterBottom>
+        <Icon sx={{ fontSize: 50, color: color, mb: 2 }} aria-hidden="true" />
+        <Typography variant="h6" fontWeight={600} gutterBottom component="h3">
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {desc}
         </Typography>
       </Box>
-    </motion.div>
+    </motion.article>
   );
 }
 
@@ -101,8 +105,49 @@ function Services() {
     },
   ];
 
+  // JSON-LD structured data describing the offered services for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Auto Repair Services",
+    "provider": {
+      "@type": "AutoRepair",
+      "name": "Nidham Alaudddin Workshop",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Abu Dhabi",
+        "addressRegion": "Abu Dhabi",
+        "addressCountry": "AE"
+      },
+      "telephone": "+971505219792",
+      "url": "https://car-repair-workshop.vercel.app/" // Replace with your actual domain
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Car Repair Services",
+      "itemListElement": services.map((s) => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": s.title,
+          "description": s.desc,
+        },
+      })),
+    },
+  };
+
   return (
-    <section id="services" className="py-5 bg-light">
+    <section
+      id="services"
+      className="py-5 bg-light"
+      aria-label="Our car repair and auto service offerings"
+    >
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+
       <Container>
         <Typography
           variant="h4"
@@ -113,6 +158,7 @@ function Services() {
             mb: 5,
             fontSize: { xs: "1.8rem", md: "2.2rem" },
           }}
+          component="h2"
         >
           Our Services
         </Typography>

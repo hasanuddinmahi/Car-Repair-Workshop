@@ -16,6 +16,7 @@ function Hero() {
   return (
     <Box
       component="section"
+      aria-label="Hero Banner with car service introduction"
       className="d-flex align-items-center justify-content-center text-center"
       sx={{
         position: "relative",
@@ -26,7 +27,7 @@ function Hero() {
         minHeight: { xs: "60vh", md: "80vh" },
       }}
     >
-      {/* Background */}
+      {/* Background Image (Decorative only) */}
       <Box
         sx={{
           position: "absolute",
@@ -56,7 +57,7 @@ function Hero() {
           transition={{ duration: 1, ease: "easeOut" }}
         >
           <Typography
-            variant="h3"
+            variant="h1"
             component="h1"
             fontWeight={700}
             mb={1}
@@ -66,7 +67,7 @@ function Hero() {
           </Typography>
 
           <Typography
-            variant="h6"
+            variant="p"
             component="p"
             fontWeight={500}
             mb={3}
@@ -79,6 +80,7 @@ function Hero() {
             variant="contained"
             size="large"
             href="#contact"
+            aria-label="Book a car service appointment"
             sx={{
               bgcolor: "#fbb034",
               color: "black",

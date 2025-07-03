@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Typography, Link, Box, Stack, IconButton } from "@mui/material";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
 
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -39,73 +40,110 @@ const MotionIconButton = motion(IconButton);
 
 export default function Footer() {
   return (
-    <Box
-      component="footer"
-      sx={{
-        bgcolor: "background.paper",
-        background: "linear-gradient(135deg, #121212 0%, #1f1f1f 100%)",
-        color: "#eee",
-        py: 4,
-        mt: 5,
-        userSelect: "none",
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      }}
-    >
-      <Container maxWidth="md" sx={{ textAlign: "center" }}>
-        <Typography variant="body2" sx={{ mb: 1, userSelect: "text" }}>
-          &copy; 2025 Nidham Alauddin Workshop. All rights reserved.
-        </Typography>
+    <>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AutoRepair",
+            "name": "Nidham Alaudddin Workshop",
+            "image": "https://yourdomain.com/logo.jpg",
+            "url": "https://car-repair-workshop.vercel.app/",
+            "telephone": "+971505219792",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Musaffah M7, Plot No- 35",
+              "addressLocality": "Abu Dhabi",
+              "addressRegion": "Abu Dhabi",
+              "postalCode": "",
+              "addressCountry": "AE"
+            },
+            "sameAs": socialLinks.map((link) => link.url),
+            "openingHours": "Su-Sa 09:00-20:00",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+971505219792",
+              "contactType": "customer service",
+              "areaServed": "AE",
+              "availableLanguage": ["English", "Arabic"]
+            }
+          })}
+        </script>
+      </Helmet>
 
-        <Typography variant="body2" sx={{ mb: 1, userSelect: "text" }}>
-          <strong>Address: </strong>
-          <Link
-            href="https://maps.app.goo.gl/qxStuLGHnksiFZaRA?g_st=iw"
-            target="_blank"
-            rel="noopener noreferrer"
-            underline="hover"
-            color="success.main"
-            sx={{
-              transition: "color 0.3s ease",
-              "&:hover": { color: "success.light" },
-            }}
-          >
-            Musaffah M7, Plot No- 35, Abu Dhabi, UAE
-          </Link>
-        </Typography>
+      <Box
+        component="footer"
+        sx={{
+          bgcolor: "background.paper",
+          background: "linear-gradient(135deg, #121212 0%, #1f1f1f 100%)",
+          color: "#eee",
+          py: 4,
+          mt: 5,
+          userSelect: "none",
+          fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        }}
+      >
+        <Container maxWidth="md" sx={{ textAlign: "center" }}>
+          <Typography variant="body2" sx={{ mb: 1, userSelect: "text" }}>
+            &copy; 2025 Nidham Alauddin Workshop. All rights reserved.
+          </Typography>
 
-        <Typography variant="body2" sx={{ mb: 3, userSelect: "text" }}>
-          <strong>Phone: </strong>
-          <Link
-            href="tel:+971505219792"
-            underline="hover"
-            color="success.main"
-            sx={{
-              transition: "color 0.3s ease",
-              "&:hover": { color: "success.light" },
-            }}
-          >
-            +971 50 521 9792
-          </Link>
-        </Typography>
-
-        <Stack direction="row" justifyContent="center" spacing={4} sx={{ fontSize: 28 }}>
-          {socialLinks.map(({ Icon, url, label, color }) => (
-            <MotionIconButton
-              key={label}
-              component="a"
-              href={url}
+          <Typography variant="body2" sx={{ mb: 1, userSelect: "text" }}>
+            <strong>Address: </strong>
+            <Link
+              href="https://maps.app.goo.gl/tD9S4X888BGsn9gr7?g_st=iw"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={label}
-              sx={{ color: "#eee" }}
-              whileHover={{ scale: 1.3, color }}
-              transition={{ type: "spring", stiffness: 300 }}
+              underline="hover"
+              color="success.main"
+              sx={{
+                transition: "color 0.3s ease",
+                "&:hover": { color: "success.light" },
+              }}
             >
-              <Icon fontSize="inherit" />
-            </MotionIconButton>
-          ))}
-        </Stack>
-      </Container>
-    </Box>
+              Musaffah M7, Plot No- 35, Abu Dhabi, UAE
+            </Link>
+          </Typography>
+
+          <Typography variant="body2" sx={{ mb: 3, userSelect: "text" }}>
+            <strong>Phone: </strong>
+            <Link
+              href="tel:+971505219792"
+              underline="hover"
+              color="success.main"
+              sx={{
+                transition: "color 0.3s ease",
+                "&:hover": { color: "success.light" },
+              }}
+            >
+              +971 50 521 9792
+            </Link>
+          </Typography>
+
+          <Stack
+            direction="row"
+            justifyContent="center"
+            spacing={4}
+            sx={{ fontSize: 28 }}
+          >
+            {socialLinks.map(({ Icon, url, label, color }) => (
+              <MotionIconButton
+                key={label}
+                component="a"
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                sx={{ color: "#eee" }}
+                whileHover={{ scale: 1.3, color }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <Icon fontSize="inherit" />
+              </MotionIconButton>
+            ))}
+          </Stack>
+        </Container>
+      </Box>
+    </>
   );
 }
